@@ -23,7 +23,6 @@ fun ViewModelFailed.initRetry(autoReTry: Boolean, callback: () -> Unit) =
             coroutineContext[RetryCallback]
                 ?.callback?.invoke()
         }
-        Log.e("autoReTry:------","$autoReTry")
         if (autoReTry) {
             onRetry()
             retryCallBack.invoke()

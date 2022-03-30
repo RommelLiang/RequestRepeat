@@ -1,15 +1,11 @@
 package com.karl.requestrepeat
 
 import android.app.AlertDialog
-import android.app.Dialog
-import android.content.Context
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.fragment.app.DialogFragment
 import java.util.*
 
 class MainActivity : AppCompatActivity() {

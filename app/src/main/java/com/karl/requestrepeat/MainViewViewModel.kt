@@ -12,7 +12,10 @@ import java.lang.RuntimeException
 class MainViewViewModel : ViewModel(), ViewModelFailed {
     val liveData: MutableLiveData<BaseData> = MutableLiveData()
 
-
+    /**
+     * @param num:用来演示Request请求数据
+     * @param repeat:失败后自动重试的次数
+     * */
     fun request(num: Int, repeat: Int = 0) {
         liveData.value = BaseData.loading()
         viewModelScope.launch(initRetry(repeat > 0) {

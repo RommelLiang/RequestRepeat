@@ -13,7 +13,7 @@ viewModelScope.launch() {
 	request()
 }
 ```
-viewModelScope本质上是一个ViewModel的扩展函数，利用它可以便捷的在ViewModel创建协程，具体的代码就不展开了。默认情况下，它的CoroutineContext由Job和CoroutineDispatcher组成。而协程的上下文本质上就是一个实现了key-value访问的方式的链表结构。我们可以通过继承`AbstractCoroutineContextElement`的方式实现自定义的CoroutineContext上下文实现：
+viewModelScope本质上是一个ViewModel的扩展函数，利用它可以便捷的在ViewModel创建协程，具体的代码就不展开了。默认情况下，它的CoroutineContext由Job和CoroutineDispatcher组成。而协程的上下文本质上就是一个实现了key-value访问的方式的链表结构。我们可以通过继承`AbstractCoroutineContextElement`的方式实现自定义的CoroutineContext上下文：
 
 ```
 class RetryCallback(val callback: () -> Unit) : AbstractCoroutineContextElement(RetryCallback) {
@@ -30,6 +30,7 @@ val coroutineExceptionHandler = CoroutineExceptionHandler { coroutineContext, th
 }
 ```
 紧接着，要将coroutineExceptionHandler添加到发起网络请求的协程上下文里：
+
 ```
 viewModelScope.launch(exceptionHandler
       + RetryCallback { request() }) { 
@@ -40,6 +41,7 @@ viewModelScope.launch(exceptionHandler
 此时，只要在发起网络请求的页面里获取到`callback`，并在点击重试按钮的时候调用它，就能实现重试的逻辑。
 
 进一步对它进行封装并增加失败后自动重试逻辑，创建供ViewModel使用的接口，用来处理网络请求错误的后续逻辑：
+
 ```
 interface ViewModelFailed {
     /**
@@ -115,4 +117,6 @@ class MainViewViewModel : ViewModel(), ViewModelFailed {
 
 }
 ```
+
+最后附上[完整代码和使用Demo](https://github.com/RommelLiang/RequestRepeat)
 

@@ -1,5 +1,6 @@
 package com.karl.requestrepeat
 
+//回调数据构建
 data class BaseData(val result: Triple<Status, Data?, Int?>) {
     companion object {
         fun success(value: Int) = BaseData(Triple(Status.SUCCESS, null, value))
@@ -10,7 +11,10 @@ data class BaseData(val result: Triple<Status, Data?, Int?>) {
     }
 }
 
+//错误信息数据类型
 data class Data(val throwable: Throwable?, val callback: (() -> Unit)?)
+
+//请求状态处理
 enum class Status {
     NORMAL,
     LOADING,
